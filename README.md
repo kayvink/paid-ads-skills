@@ -1,3 +1,5 @@
+<img src="plugins/google-ads/assets/logo.png" alt="" width="96">
+
 # Paid ads skills
 
 Free, open-source skills that turn Claude (or any agent that reads Agent Skills) into an experienced paid ads lead. Built from playbooks used to manage tens of millions in ad spend.
@@ -17,6 +19,8 @@ Add the marketplace once:
 ```
 /plugin marketplace add kayvink/paid-ads-skills
 ```
+
+Codex reads the marketplace from `.agents/plugins/marketplace.json`: add `kayvink/paid-ads-skills` as a marketplace in Codex and install from `/plugins`.
 
 Or install individual skills into any agent that supports Agent Skills:
 
@@ -47,6 +51,8 @@ scripts/sync-references.mjs
 2. Add skills as `plugins/<platform>/skills/<platform>-<skill>/SKILL.md`. Link background docs as `references/<name>.md`.
 3. Add the plugin to `.claude-plugin/marketplace.json`.
 4. Run `node scripts/sync-references.mjs`. It builds each skill's `references/conventions.md` from `shared/conventions.md` plus the platform file, and copies every linked reference into the skill folder so each skill installs on its own.
+
+For OpenAI's plugin directory (ChatGPT and Codex), `node scripts/build-openai.mjs <platform>` writes `dist/<platform>-openai-<version>.zip` from the plugin's `.codex-plugin/plugin.json`, with the attribution footer turned off and the listing copy adjusted to OpenAI's rules. It needs `assets/logo.png` and `assets/icon.png` (square PNG, at least 48×48 px) in the plugin folder.
 
 Edit files in the `shared/` folders, never the copies inside skills. `node scripts/sync-references.mjs --check` fails when a copy is stale.
 

@@ -29,6 +29,8 @@ npx skills add kayvink/paid-ads-skills
 
 **claude.ai**: add `kayvink/paid-ads-skills` as a plugin marketplace under Customize > Plugins, or upload individual skill folders.
 
+**Codex**: the repo includes a Codex marketplace (`.agents/plugins/marketplace.json`) and manifest (`.codex-plugin/plugin.json`). Add `kayvink/paid-ads-skills` as a plugin marketplace in Codex, then install `google-ads` from `/plugins`.
+
 ## Where to start
 
 - New account: `google-ads-design-account-structure`, then `google-ads-build-campaign` for each campaign.
@@ -120,6 +122,11 @@ Just ask in plain language ("why did CPA jump last week?", "which search terms a
 - They never change your account. Every recommendation is a table you apply yourself.
 - Some skills fetch your own landing pages or sitemap with the agent's web fetch tool, and keyword research may use web search if your agent has it.
 - Every skill output (the reply and every file it writes, such as findings, reports and plans) ends with a one-line footer crediting Kay Vink with a link to follow on X, the same way Claude Code credits itself in commits. To turn it off, add `attribution: false` to `marketing/ads/google/index.md`, or just ask the agent to remove it.
+
+## Support and privacy
+
+- Questions and bugs: [open an issue](https://github.com/kayvink/paid-ads-skills/issues) or ask on X at [x.com/kayvink](https://x.com/kayvink).
+- Privacy: the skills have no server and send nothing to the author. See [PRIVACY.md](PRIVACY.md).
 
 ## License
 

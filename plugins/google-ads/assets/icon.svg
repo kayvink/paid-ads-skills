@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <clipPath id="tile">
+      <rect x="0" y="0" width="1024" height="1024" rx="230" ry="230"/>
+    </clipPath>
+
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4C8DFF"/>
+      <stop offset="0.55" stop-color="#2557F0"/>
+      <stop offset="1" stop-color="#1A2FB8"/>
+    </linearGradient>
+
+    <!-- Colour light behind the glass, as radial gradients (no blur edges) -->
+    <radialGradient id="cyan" cx="0.2" cy="0.18" r="0.55">
+      <stop offset="0" stop-color="#6FE6FF" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#6FE6FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violet" cx="0.86" cy="0.88" r="0.6">
+      <stop offset="0" stop-color="#8A55FF" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#8A55FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sky" cx="0.82" cy="0.2" r="0.4">
+      <stop offset="0" stop-color="#4FB0FF" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#4FB0FF" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.34"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="0.18" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0.04"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.45"/>
+    </linearGradient>
+
+    <!-- Glyph glass -->
+    <linearGradient id="glyphFill" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.96"/>
+      <stop offset="0.55" stop-color="#F1F6FF" stop-opacity="0.78"/>
+      <stop offset="1" stop-color="#C4D6FF" stop-opacity="0.62"/>
+    </linearGradient>
+    <linearGradient id="glyphShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="0.3" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="glyphRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.85"/>
+    </linearGradient>
+
+    <filter id="lift" x="-40%" y="-40%" width="180%" height="190%">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#0A1A6E" flood-opacity="0.5"/>
+    </filter>
+    <!-- Inner shadow along the lower edge of the glyph, for thickness -->
+    <filter id="innerShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feOffset dx="0" dy="-0.35" in="SourceAlpha" result="shifted"/>
+      <feGaussianBlur in="shifted" stdDeviation="0.25" result="blurred"/>
+      <feComposite in="SourceAlpha" in2="blurred" operator="out" result="edge"/>
+      <feFlood flood-color="#2140C8" flood-opacity="0.45"/>
+      <feComposite in2="edge" operator="in"/>
+    </filter>
+
+    <!-- Heroicons megaphone (solid, 24px) by Tailwind Labs, MIT License -->
+    <path id="glyph" d="M16.881 4.345A23.112 23.112 0 0 1 8.25 6H7.5a5.25 5.25 0 0 0-.88 10.427 21.593 21.593 0 0 0 1.378 3.94c.464 1.004 1.674 1.32 2.582.796l.657-.379c.88-.508 1.165-1.593.772-2.468a17.116 17.116 0 0 1-.628-1.607c1.918.258 3.76.75 5.5 1.446A21.727 21.727 0 0 0 18 11.25c0-2.414-.393-4.735-1.119-6.905ZM18.26 3.74a23.22 23.22 0 0 1 1.24 7.51 23.22 23.22 0 0 1-1.41 7.992.75.75 0 1 0 1.409.516 24.555 24.555 0 0 0 1.415-6.43 2.992 2.992 0 0 0 .836-2.078c0-.807-.319-1.54-.836-2.078a24.65 24.65 0 0 0-1.415-6.43.75.75 0 1 0-1.409.516c.059.16.116.321.17.483Z"/>
+    <clipPath id="glyphClip">
+      <use href="#glyph"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#tile)">
+    <rect width="1024" height="1024" fill="url(#base)"/>
+    <rect width="1024" height="1024" fill="url(#cyan)"/>
+    <rect width="1024" height="1024" fill="url(#violet)"/>
+    <rect width="1024" height="1024" fill="url(#sky)"/>
+    <rect width="1024" height="560" fill="url(#sheen)"/>
+
+    <g transform="translate(212 212) scale(25)">
+      <g filter="url(#lift)">
+        <use href="#glyph" fill="url(#glyphFill)"/>
+      </g>
+      <use href="#glyph" filter="url(#innerShadow)"/>
+      <g clip-path="url(#glyphClip)">
+        <rect x="0" y="0" width="24" height="24" fill="url(#glyphShine)"/>
+      </g>
+      <use href="#glyph" fill="none" stroke="url(#glyphRim)" stroke-width="0.16"/>
+    </g>
+
+    <rect x="5" y="5" width="1014" height="1014" rx="225" ry="225" fill="none" stroke="url(#rim)" stroke-width="10"/>
+  </g>
+</svg>

@@ -1,0 +1,61 @@
+{
+  "name": "google-ads",
+  "version": "0.1.0",
+  "description": "Open-source Google Ads skills: a 128-check health check, search term and keyword audits, account structure, campaign builds, testing, bidding, pacing, conversion tracking and weekly reports, run through Google's official Google Ads MCP server.",
+  "author": {
+    "name": "Kay Vink",
+    "url": "https://x.com/kayvink"
+  },
+  "homepage": "https://github.com/kayvink/paid-ads-skills/tree/main/plugins/google-ads",
+  "repository": "https://github.com/kayvink/paid-ads-skills",
+  "license": "MIT",
+  "keywords": [
+    "google-ads",
+    "google-ads-audit",
+    "ads",
+    "paid-ads",
+    "ppc",
+    "paid-search",
+    "sem",
+    "performance-max",
+    "pmax",
+    "search-terms",
+    "negative-keywords",
+    "wasted-spend",
+    "quality-score",
+    "budget-pacing",
+    "roas",
+    "cpa",
+    "conversion-tracking",
+    "gaql",
+    "account-audit",
+    "health-check",
+    "adwords",
+    "paid-media",
+    "ppc-audit"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Google Ads Skills",
+    "shortDescription": "Audit and optimize Google Ads",
+    "longDescription": "Open-source Google Ads skills that let your agent run an account the way an experienced PPC lead would. They read your account through Google's official Google Ads MCP server, do every calculation in Python, and keep what they learn about your business in a folder of markdown files so each run builds on the last.\n\n55 skills cover account structure and campaign builds, a 128-check health check across Search, Performance Max, Shopping, Display, Video and Demand Gen, search term and keyword audits, Quality Score, budget pacing, CPA and ROAS variance, bid strategy selection, test planning and readouts, geo-holdout incrementality tests, ad copy, conversion tracking setup, media plans and weekly reports.\n\nRead-only: every recommendation is a table you apply yourself in Google Ads. Requires the Google Ads MCP server (github.com/googleads/google-ads-mcp) connected to your agent. Not affiliated with or endorsed by Google.",
+    "developerName": "Kay Vink",
+    "category": "Marketing",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://github.com/kayvink/paid-ads-skills",
+    "privacyPolicyURL": "https://github.com/kayvink/paid-ads-skills/blob/main/plugins/google-ads/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/kayvink/paid-ads-skills/blob/main/plugins/google-ads/LICENSE",
+    "supportURL": "https://github.com/kayvink/paid-ads-skills/issues",
+    "defaultPrompt": [
+      "Run a health check on my Google Ads account",
+      "Which search terms are wasting money?",
+      "How should my Google Ads account be structured?",
+      "Why did my CPA go up last week?"
+    ],
+    "brandColor": "#1A73E8",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
+  }
+}
