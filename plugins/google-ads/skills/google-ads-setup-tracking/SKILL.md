@@ -286,7 +286,7 @@ For each spec event marked missing or broken, write or fix the implementation fo
 
 - **Where it fires** — server-side preferred for high-value events (purchase, subscribe, mql_qualified, paid_conversion); ad-blocker-resistant client-side fallback for funnel events. For server-side, fire on the actual lifecycle event (Stripe webhook, deal close, MQL flip in CRM), not on a UI confirmation page.
 - **Payload** — always: `value`, `currency`, `transaction_id` (= order_id / deal_id), `gclid` if available; for enhanced conversions: hashed `email` and/or `phone` and/or `address` (see normalisation recipe below).
-- **What must not happen** — no firing on `useEffect` mount, no firing in test or staging environments (gate by `process.env`), no double-fire without dedup.
+- **What must not happen** — no firing on `useEffect` mount, no firing in test or staging environments (gate on the app's environment setting), no double-fire without dedup.
 - **Dedup contract** — if both client and server emit the same logical conversion, both must include the same `event_id` (or `transaction_id`). Google de-duplicates within 24 hours when matched.
 
 ### Step 13 — Inline recipe: enhanced conversions normalisation
@@ -339,7 +339,7 @@ Critical fact: **Smart Bidding only re-reads adjustments made within 7 days** of
 For B2C and B2B self-serve motions without offline conversions, this step is skipped entirely. GA4 Measurement Protocol covers the parallel need where `gtag` cannot run (e.g. a Stripe webhook firing `paid_conversion` server-side):
 
 ```
-POST https://www.google-analytics.com/mp/collect?measurement_id=G-...&api_secret=...
+POST https://www.google-analytics.com/mp/collect?measurement_id=G-XXXXXXX&api_secret=<API secret>
 {
   "client_id": "<persisted GA4 client_id>",
   "user_id": "<stable user id>",
@@ -407,7 +407,7 @@ Inventory the verification tooling available in this environment, then run every
 - **Browser automation** — Playwright or Cypress in the repo, an IDE preview pane / debug mode, Claude Code computer-use / Chrome MCP. Any of these lets you trigger flows on a running dev server and intercept network requests.
 - **Shell** — for grep-style checks; always available.
 - **Google Ads MCP** — for GAQL reads (conversion counts, conversion action config, upload summaries).
-- **The repo's own Google Ads API client** — if the app already uploads offline conversions with its own credentials, its upload path can be exercised with `validate_only=true` against `ConversionUploadService` / `ConversionAdjustmentUploadService`. Run it only in a dev environment and only when the user agrees.
+- **The repo's own Google Ads API client** — if the app already uploads offline conversions, its upload path can be exercised with `validate_only=true` against `ConversionUploadService` / `ConversionAdjustmentUploadService`. Don't run it yourself and never read the app's credentials: prepare the exact command or script call, and ask the user to run it in their dev environment and paste back the response.
 
 Each check below specifies what you do, what data you need (and where it comes from), and what "pass" means. Skip motion-specific checks for motions where they don't apply (offline upload + adjustment lifecycle are sales-led / hybrid only).
 
@@ -420,7 +420,7 @@ Each check below specifies what you do, what data you need (and where it comes f
 | Test-environment isolation | Set `NODE_ENV=test` (or staging-equivalent for the user's stack); browser automation triggers the conversion | Running app under test env | No outbound request contains the production conversion ID `AW-XXXXXXXXX`; request blocked or routed to a test ID |
 | Consent Mode `gcd` parameter | Browser automation: load page, grant consent via the CMP UI, trigger conversion; intercept Google Ads ping | Running app + CMP | `gcd` parameter present on the request and matches the granted consent state |
 | Production ID hygiene in test/staging code | Shell: `grep -rn "AW-XXXXXXXXX" --include='*.{ts,tsx,js,jsx}' . | grep -E '(test\|staging\|fixture\|mock\|spec)/'` — substitute the actual prod ID | Repo | Empty output |
-| Offline upload validates *(sales-led / hybrid only)* | Ask the user for one sample row (deal_id, gclid, value, conversion_date, hashed email if EC enabled). Submit it through the repo's own upload client to `ConversionUploadService.uploadClickConversions` with `validate_only=true` (a write service, so not through the read-only MCP). If the repo has no client yet or the user declines, record the check as not run | User-provided sample row | API response has no `partial_failure_error` rows |
+| Offline upload validates *(sales-led / hybrid only)* | Ask the user for one sample row (deal_id, gclid, value, conversion_date, hashed email if EC enabled). Prepare a call to the repo's own upload client for `ConversionUploadService.uploadClickConversions` with `validate_only=true` (a write service, so not through the read-only MCP), and ask the user to run it and paste back the response. If the repo has no client yet or the user declines, record the check as not run | User-provided sample row | API response has no `partial_failure_error` rows |
 | Triangulation against source of truth | GAQL via the MCP: `SELECT segments.conversion_action_name, segments.date, metrics.all_conversions FROM campaign WHERE segments.date BETWEEN '<start>' AND '<end>' AND segments.conversion_action_name = '<primary action>'` over the last 7 days ending yesterday; sum in Python. Ask the user for the same window's count from their source of truth (CRM, order DB, app logs) | GAQL for Google Ads side; user provides source-of-truth number | `abs(google_ads − source_of_truth) / source_of_truth ≤ 0.30`, computed in Python |
 | Adjustment landed *(sales-led / hybrid only)* | Ask the user for the deal_id (= order_id) of a recent closed-won. Query the offline upload summaries via the MCP (`offline_conversion_upload_conversion_action_summary`; check its fields with `get_resource_metadata`) for adjustment success and error counts on the action; per-order adjustment history isn't exposed through GAQL, so confirm the order itself from the repo's upload logs or the Google Ads UI | User-provided deal_id; GAQL lookup; upload logs | At least one `RESTATEMENT` adjustment recorded for that order_id with the expected `adjusted_value` |
 | Conversion action UI configuration matches the spec | GAQL via the MCP: `SELECT conversion_action.name, conversion_action.primary_for_goal, conversion_action.value_settings.default_value, conversion_action.attribution_model_settings.attribution_model, conversion_action.status FROM conversion_action` for each action in `ads/google/conversion-tracking.md` | GAQL | Every field in the response matches the spec; flag any drift |
