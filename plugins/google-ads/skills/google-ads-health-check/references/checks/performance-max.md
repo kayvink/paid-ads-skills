@@ -40,7 +40,7 @@ WHERE campaign.advertising_channel_type = 'PERFORMANCE_MAX'
 - **ID:** `ad-strength-pmax`
 - **Category:** creative · **Urgency:** medium · **Runs by default:** yes
 - **Good looks like:** Each PMax asset group rates at least "Good" ad strength; weak groups get starved of impressions.
-- **Settings:** `minStrength` = GOOD (one of POOR, AVERAGE, GOOD, EXCELLENT; an unrecognised value is treated as GOOD); `maxOffending` = 0 (pass while the number of weak asset groups is at or below this).
+- **Settings:** `minStrength` = GOOD (one of POOR, AVERAGE, GOOD, EXCELLENT; an unrecognised value is treated as GOOD); `maxOffending` = 0 (the result stays ok while the number of weak asset groups is at or below this).
 
 **Queries**
 

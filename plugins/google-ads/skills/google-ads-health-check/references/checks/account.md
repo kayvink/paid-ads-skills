@@ -272,7 +272,7 @@ WHERE campaign.status = 'ENABLED'
 - **fail:** any account issue, or any campaign issue (two separate observations). — **ok:** otherwise.
 - **unknown:** both queries error on every account with no rows.
 - **Report:** account issues: account, template (all rows). Campaign issues: account, campaign, template; capped at 50. Wording: "N accounts have an account-level tracking template without the final-URL substitution token: every click on every campaign in these accounts lands on the tracker URL instead of the landing page." / "N active campaigns have a campaign-level tracking template without an `{lpurl}` token: every click sends users to the tracker URL instead of the landing page."
-- **Action:** Account level: in Admin → Account settings → Tracking, remove the template, or fix it to include `{lpurl}` (e.g. `https://tracker.example.com/?u={lpurl}`); if tracking has moved to `final_url_suffix`, clear the template entirely. Campaign level: open each campaign → Settings → Campaign URL options, add `{lpurl}` to the template, or clear it if a suffix on the campaign or account is doing the tracking.
+- **Action:** Account level: in Admin → Account settings → Tracking, remove the template, or fix it to include `{lpurl}` (the tracker's redirect URL followed by `?u={lpurl}`); if tracking has moved to `final_url_suffix`, clear the template entirely. Campaign level: open each campaign → Settings → Campaign URL options, add `{lpurl}` to the template, or clear it if a suffix on the campaign or account is doing the tracking.
 
 ## UTM tagging
 
@@ -710,7 +710,7 @@ WHERE campaign.status = 'ENABLED'
 - **ID:** `spend-fragmentation`
 - **Category:** hygiene · **Urgency:** low · **Runs by default:** yes
 - **Good looks like:** Few campaigns spend below 100 a month; sub-scale campaigns starve smart bidding of learning data.
-- **Settings:** `minSpend` = 100 (campaigns below this 30-day spend, account currency, count as fragmented); `maxOffending` = 3 (pass while the number of fragmented campaigns is at most this).
+- **Settings:** `minSpend` = 100 (campaigns below this 30-day spend, account currency, count as fragmented); `maxOffending` = 3 (the result stays ok while the number of fragmented campaigns is at most this).
 
 **Queries**
 
@@ -1547,7 +1547,7 @@ Window: last 30 days ending yesterday. Because it selects metrics, campaigns wit
 - **ID:** `demographic-exclusions`
 - **Category:** targeting · **Urgency:** low · **Runs by default:** yes
 - **Good looks like:** Each campaign excludes at least one irrelevant age, gender, income or parental group.
-- **Settings:** `maxOffending` = 0 (pass when the number of campaigns with zero demographic exclusions is at most this).
+- **Settings:** `maxOffending` = 0 (the result stays ok when the number of campaigns with zero demographic exclusions is at most this).
 
 **Queries**
 
