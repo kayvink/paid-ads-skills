@@ -1,0 +1,48 @@
+{
+  "name": "paid-ads-skills",
+  "description": "Free, open-source paid ads skills for Claude: Google Ads today, more ad platforms to come. Built from playbooks used to manage tens of millions in ad spend.",
+  "owner": {
+    "name": "Kay Vink",
+    "url": "https://x.com/kayvink"
+  },
+  "plugins": [
+    {
+      "name": "google-ads",
+      "displayName": "Google Ads Audits, Health Checks & Optimization",
+      "source": "./plugins/google-ads",
+      "description": "Free, open-source Google Ads analyst for Claude, built from playbooks used to manage tens of millions in ad spend. Works with Google's official Google Ads MCP, no subscription. Runs a 128-check account health check across Search, Performance Max, Shopping, Display, Video and Demand Gen; finds wasted spend in search terms and proposes negative keywords; covers Quality Score, keyword cannibalisation, budget pacing, CPA and ROAS variance, conversion tracking, media plans and weekly PPC reports. Unofficial; not affiliated with Google.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Kay Vink",
+        "url": "https://x.com/kayvink"
+      },
+      "category": "marketing",
+      "keywords": [
+        "google-ads",
+        "google-ads-audit",
+        "ads",
+        "paid-ads",
+        "ppc",
+        "paid-search",
+        "sem",
+        "performance-max",
+        "pmax",
+        "search-terms",
+        "negative-keywords",
+        "wasted-spend",
+        "quality-score",
+        "budget-pacing",
+        "roas",
+        "cpa",
+        "conversion-tracking",
+        "gaql",
+        "account-audit",
+        "health-check",
+        "adwords",
+        "paid-media",
+        "ppc-audit"
+      ],
+      "homepage": "https://github.com/kayvink/paid-ads-skills/tree/main/plugins/google-ads"
+    }
+  ]
+}
